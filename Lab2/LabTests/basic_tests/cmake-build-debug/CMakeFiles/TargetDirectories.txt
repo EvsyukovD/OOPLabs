@@ -1,3 +1,0 @@
-C:/Users/devsy/CLionProjects/OOPLab2/LabTests/basic_tests/cmake-build-debug/CMakeFiles/runUnitTesting.dir
-C:/Users/devsy/CLionProjects/OOPLab2/LabTests/basic_tests/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/devsy/CLionProjects/OOPLab2/LabTests/basic_tests/cmake-build-debug/CMakeFiles/rebuild_cache.dir
