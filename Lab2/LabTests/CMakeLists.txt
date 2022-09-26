@@ -1,0 +1,5 @@
+project(LabTests)
+add_subdirectory(lib/googletest) #Здесь лежит файл CMakeLists c необходимыми целями(targets)
+add_subdirectory(basic_tests)
+include_directories(lib/googletest/googletest/include)
+include_directories(../Lab2Lib)
