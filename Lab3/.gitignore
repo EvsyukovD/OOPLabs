@@ -1,0 +1,5 @@
+.idea
+cmake-build-debug
+/tests/cmake-build-debug
+/lib/cmake-build-debug
+/tests/unit_tests/cmake-build-debug

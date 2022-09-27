@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.22)
+project(tests)
+add_subdirectory(lib/googletest) #Здесь лежит файл CMakeLists c необходимыми целями(targets)
+add_subdirectory(unit_tests)
+include_directories(lib/googletest/googletest/include)
+include_directories(../lib)
