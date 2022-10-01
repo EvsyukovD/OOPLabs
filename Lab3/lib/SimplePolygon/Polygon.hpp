@@ -18,6 +18,12 @@ namespace Lab3 {
             y = 0.0;
         }
 
+        /**
+          * Строковое представление точки
+          * @return Строка с точкой
+          * */
+        char *toString() const;
+
         bool operator==(const Point &p) const;
     };
 
@@ -61,7 +67,7 @@ namespace Lab3 {
              * @return Point - точка центра тяжести
              * @throws std::logic_error - если у многоугольника нет вершин
              * */
-            Point gravityCenter() const;
+            Point getGravityCenter() const;
 
             /**
              * Получение вершины многоугольника с индексом index
@@ -101,11 +107,12 @@ namespace Lab3 {
              * i больше либо равен числу вершин в многоугольнике
              * */
             void set(const Point &p, int i);
+
             /**
              * Строковое представление многоугольника
              * @return Строка с точками многоугольника
              * */
-            char* toString() const;
+            char *toString() const;
 
         private:
             /**
@@ -129,12 +136,67 @@ namespace Lab3 {
              * */
             void rotate(Point &p, double alpha);
 
-            /**
-             * Строковое представление точки
-             * @return Строка с точкой
-             * */
-            char *toString(const Point &p) const;
         };
+
+        /**
+         * Диалоговая функция инициализации многоугольника с помощью пустого конструктора
+         * @param p - исходный многоугольник
+         * */
+        void initPolygonByEmptyConstructor(Polygon &p);
+
+        /**
+         * Диалоговая функция инициализации многоугольника с помощью точки
+         * @param p - исходный многоугольник
+         * */
+        void initPolygonByPoint(Polygon &p);
+
+        /**
+         * Диалоговая функция инициализации многоугольника с помощью массива точек
+         * @param p - исходный многоугольник
+         * */
+        void initPolygonByArray(Polygon &p);
+
+        /**
+         * Диалоговая функция вывода многоугольника в консоль
+         * @param p - исходный многоугольник
+         * */
+        void printPolygon(Polygon &p);
+
+        /**
+         * Диалоговая функция вывода в консоль центра тяжести многоугольника
+         * @param p - исходный многоугольник
+         * */
+        void getGravityCenter(Polygon &p);
+
+        /**
+         * Диалоговая функция получения вершины многоугольника по её номеру
+         * @param p - исходный многоугольник
+         * */
+        void getNodeByIndex(Polygon &p);
+
+        /**
+         * Диалоговая функция поворота многоугольника
+         * @param p - исходный многоугольник
+         * */
+        void rotate(Polygon &p);
+
+        /**
+         * Диалоговая функция перемещения многоугольника
+         * @param p - исходный многоугольник
+         * */
+        void move(Polygon &p);
+
+        /**
+         * Диалоговая функция получения количества вершин многоугольника
+         * @param p - исходный многоугольник
+         * */
+        void getNodesNum(Polygon &p);
+
+        /**
+         * Диалоговая функция замены одной вершины многоугольника на другую
+         * @param p - исходный многоугольник
+         * */
+        void set(Polygon &p);
     }
     namespace PolygonWithOperators {
         class Polygon {

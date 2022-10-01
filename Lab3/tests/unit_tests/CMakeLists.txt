@@ -5,4 +5,4 @@ set(TESTS_FILES SimplePolygonTest.cpp)
 add_executable(runUnitTesting ${TESTS_FILES})
 
 target_link_libraries(runUnitTesting gtest gtest_main)
-target_link_libraries(runUnitTesting lib)
+target_link_libraries(runUnitTesting SimplePolygon)

@@ -1,4 +1,4 @@
-#include "SimplePolygon/Lab3.hpp"
+#include "SimplePolygon/Polygon.hpp"
 #include "gtest/gtest.h"
 
 TEST(SimplePolygonConstructors, EmptyConstructor) {
@@ -54,6 +54,10 @@ TEST(SimplePolygonMethods, Getters) {
     ASSERT_NEAR(points[2].y, c.y, error);
     ASSERT_THROW(polygon.get(3), std::out_of_range);
     ASSERT_THROW(polygon.get(-3), std::out_of_range);
+    const double e = 0.001;
+    Lab3::Point center = polygon.getGravityCenter();
+    ASSERT_NEAR(center.x, 0.133, e);
+    ASSERT_NEAR(center.y, 2.667, e);
 }
 
 TEST(SimplePolygonMethods, Setters) {
@@ -93,7 +97,7 @@ TEST(SimplePolygonMethods, Transformations) {
     ASSERT_NEAR(newPoints[2].y, 1.0, error);
 
     polygon = Lab3::SimplePolygon::Polygon(3, points);
-    polygon.move({0.0,1.0});
+    polygon.move({0.0, 1.0});
     newPoints[0] = polygon.get(0);
     newPoints[1] = polygon.get(1);
     newPoints[2] = polygon.get(2);
@@ -105,13 +109,15 @@ TEST(SimplePolygonMethods, Transformations) {
     ASSERT_NEAR(newPoints[2].x, 1.0, error);
     ASSERT_NEAR(newPoints[2].y, 2.0, error);
 }
-TEST(SimplePolygonMethods, StringPerfomance){
+
+TEST(SimplePolygonMethods, StringPerfomance) {
     Lab3::Point points[] = {{2.5, 1.0}};
     Lab3::SimplePolygon::Polygon polygon(1, points);
-    char* s = polygon.toString();
-    ASSERT_STREQ(s,"(2.50, 1.00)");
+    char *s = polygon.toString();
+    ASSERT_STREQ(s, "(2.50, 1.00)");
     delete[] s;
 }
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest();
     return ::RUN_ALL_TESTS();

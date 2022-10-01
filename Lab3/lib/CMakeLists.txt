@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.22)
 
 project(lib)
-set(LIB_FILES SimplePolygon/SimplePolygon.cpp PolygonWithOperators.cpp DynamicPolygon.cpp)
+#set(LIB_FILES SimplePolygon/SimplePolygon.cpp PolygonWithOperators.cpp DynamicPolygon.cpp)
+include_directories(SimplePolygon)
+add_subdirectory(SimplePolygon)
 
-add_library(lib STATIC ${LIB_FILES})
+#add_library(lib STATIC ${LIB_FILES})

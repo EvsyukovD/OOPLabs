@@ -1,5 +1,5 @@
 #include <iostream>
-#include "SimplePolygon/Lab3.hpp"
+#include "SimplePolygon/Polygon.hpp"
 int main() {
     std::cout << "Hello, World!" << std::endl;
     return 0;
