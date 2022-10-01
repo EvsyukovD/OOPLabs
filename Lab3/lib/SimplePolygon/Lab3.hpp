@@ -45,7 +45,7 @@ namespace Lab3 {
             /**
              * Инициализация с помощью массива точек - вершин многоугольника
              * @param num, p - количество вершин и массив вершин
-             * @throws std::logic_error - если в массиве есть совпадающие точки или если num <= 0
+             * @throws std::logic_error - если в массиве есть совпадающие точки или если num меньше или равен 0
              * @throws std::length_error - если num > NODES_MAX_NUM
              * */
             Polygon(int num, const Point *p);
@@ -101,6 +101,11 @@ namespace Lab3 {
              * i больше либо равен числу вершин в многоугольнике
              * */
             void set(const Point &p, int i);
+            /**
+             * Строковое представление многоугольника
+             * @return Строка с точками многоугольника
+             * */
+            char* toString() const;
 
         private:
             /**
@@ -123,6 +128,12 @@ namespace Lab3 {
              * @param alpha - угол поворота
              * */
             void rotate(Point &p, double alpha);
+
+            /**
+             * Строковое представление точки
+             * @return Строка с точкой
+             * */
+            char *toString(const Point &p) const;
         };
     }
     namespace PolygonWithOperators {

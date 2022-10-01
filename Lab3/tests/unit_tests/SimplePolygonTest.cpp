@@ -1,4 +1,4 @@
-#include "../../lib/Lab3.hpp"
+#include "SimplePolygon/Lab3.hpp"
 #include "gtest/gtest.h"
 
 TEST(SimplePolygonConstructors, EmptyConstructor) {
@@ -105,7 +105,13 @@ TEST(SimplePolygonMethods, Transformations) {
     ASSERT_NEAR(newPoints[2].x, 1.0, error);
     ASSERT_NEAR(newPoints[2].y, 2.0, error);
 }
-
+TEST(SimplePolygonMethods, StringPerfomance){
+    Lab3::Point points[] = {{2.5, 1.0}};
+    Lab3::SimplePolygon::Polygon polygon(1, points);
+    char* s = polygon.toString();
+    ASSERT_STREQ(s,"(2.50, 1.00)");
+    delete[] s;
+}
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest();
     return ::RUN_ALL_TESTS();

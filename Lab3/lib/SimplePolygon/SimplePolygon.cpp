@@ -1,5 +1,6 @@
 #include "Lab3.hpp"
 #include <cmath>
+#include <cstring>
 
 namespace Lab3 {
     bool Point::operator==(const Point &p) const {
@@ -50,6 +51,7 @@ namespace Lab3 {
             }
             for (int i = 0; i < num; i++) {
                 points[i] = p[i];
+                top++;
             }
         }
 
@@ -65,8 +67,9 @@ namespace Lab3 {
         }
 
         void Polygon::rotate(Point &p, double alpha) {
-            p.x = p.x * cos(alpha) - p.y * sin(alpha);
-            p.y = p.y * cos(alpha) + p.x * sin(alpha);
+            float x = p.x, y = p.y;
+            p.x = x * (float) cos(alpha) - y * (float) sin(alpha);
+            p.y = y * (float) cos(alpha) + x * (float) sin(alpha);
         }
 
         void Polygon::rotate(int k) {
@@ -109,6 +112,41 @@ namespace Lab3 {
             }
             points[i].x = p.x;
             points[i].y = p.y;
+        }
+
+        char *Polygon::toString(const Point &p) const {
+            const char *pattern = "(, )";
+            int len = strlen(pattern) + 1;
+            char num[20];
+            sprintf_s(num, 20, "%.2f", p.x);
+            len += strlen(num);
+            sprintf_s(num, 20, "%.2f", p.y);
+            len += strlen(num);
+            char *res = new char[len];
+            sprintf_s(res, len, "(%.2f, %.2f)", p.x, p.y);
+            return res;
+        }
+
+        char *Polygon::toString() const {
+            char *res = new char[1]{'\0'}, *strPoint = nullptr;
+            int strPointSize = 0,resOldLen = 1;
+            for (int i = 0; i < top; i++) {
+                strPoint = toString(points[i]);
+                strPointSize = strlen(strPoint);
+                resOldLen = strlen(res) + 1;
+                res = (char *) realloc(res, strPointSize + resOldLen);
+                memcpy((res + resOldLen - 1), strPoint, strPointSize);
+                delete[] strPoint;
+                strPoint = nullptr;
+            }
+            res[strPointSize + resOldLen - 1] = '\0';
+            return res;
+        }
+
+        void Polygon::print(std::ostream &output) const {
+            char *s = toString();
+            output << s;
+            delete[] s;
         }
     }
 }
