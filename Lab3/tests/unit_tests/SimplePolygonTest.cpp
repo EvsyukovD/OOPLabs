@@ -1,4 +1,4 @@
-#include "SimplePolygon/Polygon.hpp"
+#include "../../lib/SimplePolygon/Polygon.hpp"
 #include "gtest/gtest.h"
 
 TEST(SimplePolygonConstructors, EmptyConstructor) {
@@ -8,26 +8,26 @@ TEST(SimplePolygonConstructors, EmptyConstructor) {
 }
 
 TEST(SimplePolygonConstructors, OnePointConstructor) {
-    Lab3::Point p(1.0, 1.0);
+    Math::Point p(1.0, 1.0);
     Lab3::SimplePolygon::Polygon polygon(p);
     ASSERT_EQ(1, polygon.getNodesNum());
     const double error = 0.1;
-    Lab3::Point a = polygon.get(0);
+    Math::Point a = polygon.get(0);
     ASSERT_NEAR(p.x, a.x, error);
     ASSERT_NEAR(p.y, a.y, error);
 }
 
 TEST(SimplePolygonConstructors, ArrayOfPointsConstructor) {
-    Lab3::Point points1[] = {{1.0, 1.0},
+    Math::Point points1[] = {{1.0, 1.0},
                              {2.0, 3.0}};
-    Lab3::Point points2[30];
-    Lab3::Point points3[] = {{1.0, 1.0},
+    Math::Point points2[30];
+    Math::Point points3[] = {{1.0, 1.0},
                              {2.0, 2.5},
                              {1.0, 1.0}};
     const double error = 0.1;
     Lab3::SimplePolygon::Polygon polygon(2, points1);
-    Lab3::Point a = polygon.get(0);
-    Lab3::Point b = polygon.get(1);
+    Math::Point a = polygon.get(0);
+    Math::Point b = polygon.get(1);
     ASSERT_NEAR(points1[0].x, a.x, error);
     ASSERT_NEAR(points1[0].y, a.y, error);
     ASSERT_NEAR(points1[1].x, b.x, error);
@@ -37,14 +37,14 @@ TEST(SimplePolygonConstructors, ArrayOfPointsConstructor) {
 }
 
 TEST(SimplePolygonMethods, Getters) {
-    Lab3::Point points[] = {{0.0, 0.0},
+    Math::Point points[] = {{0.0, 0.0},
                             {0.1, 3.4},
                             {0.3, 4.6}};
     Lab3::SimplePolygon::Polygon polygon(3, points);
     const double error = 0.1;
-    Lab3::Point a = polygon.get(0);
-    Lab3::Point b = polygon.get(1);
-    Lab3::Point c = polygon.get(2);
+    Math::Point a = polygon.get(0);
+    Math::Point b = polygon.get(1);
+    Math::Point c = polygon.get(2);
     ASSERT_EQ(3, polygon.getNodesNum());
     ASSERT_NEAR(points[0].x, a.x, error);
     ASSERT_NEAR(points[0].y, a.y, error);
@@ -55,19 +55,19 @@ TEST(SimplePolygonMethods, Getters) {
     ASSERT_THROW(polygon.get(3), std::out_of_range);
     ASSERT_THROW(polygon.get(-3), std::out_of_range);
     const double e = 0.001;
-    Lab3::Point center = polygon.getGravityCenter();
+    Math::Point center = polygon.getGravityCenter();
     ASSERT_NEAR(center.x, 0.133, e);
     ASSERT_NEAR(center.y, 2.667, e);
 }
 
 TEST(SimplePolygonMethods, Setters) {
-    Lab3::Point points[] = {{0.0, 0.0},
+    Math::Point points[] = {{0.0, 0.0},
                             {0.1, 3.4},
                             {0.3, 4.6}};
     Lab3::SimplePolygon::Polygon polygon(3, points);
-    Lab3::Point p(1.0, 1.0), t(0.1, 3.4);
+    Math::Point p(1.0, 1.0), t(0.1, 3.4);
     polygon.set(p, 0);
-    Lab3::Point a = polygon.get(0);
+    Math::Point a = polygon.get(0);
     const double error = 0.1;
     ASSERT_NEAR(p.x, a.x, error);
     ASSERT_NEAR(p.y, a.y, error);
@@ -77,7 +77,7 @@ TEST(SimplePolygonMethods, Setters) {
 }
 
 TEST(SimplePolygonMethods, Transformations) {
-    Lab3::Point points[] = {{0.0, 0.0},
+    Math::Point points[] = {{0.0, 0.0},
                             {0.0, 1.0},
                             {1.0, 1.0}};
     Lab3::SimplePolygon::Polygon polygon(3, points);
@@ -85,7 +85,7 @@ TEST(SimplePolygonMethods, Transformations) {
     polygon.rotate(1);
 
     const double error = 0.001;
-    Lab3::Point newPoints[] = {polygon.get(0),
+    Math::Point newPoints[] = {polygon.get(0),
                                polygon.get(1),
                                polygon.get(2)};
 
@@ -111,7 +111,7 @@ TEST(SimplePolygonMethods, Transformations) {
 }
 
 TEST(SimplePolygonMethods, StringPerfomance) {
-    Lab3::Point points[] = {{2.5, 1.0}};
+    Math::Point points[] = {{2.5, 1.0}};
     Lab3::SimplePolygon::Polygon polygon(1, points);
     char *s = polygon.toString();
     ASSERT_STREQ(s, "(2.50, 1.00)");

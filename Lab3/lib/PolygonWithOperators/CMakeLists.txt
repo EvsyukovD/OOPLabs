@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 3.22)
+project(PolygonWithOperators)
+
+set(POLYGON_WITH_OPER_FILES PolygonWithOperators.cpp)
+add_library(PolygonWithOperators ${POLYGON_WITH_OPER_FILES})
+include_directories(MathLib)
+include_directories(DialogLib)
+add_subdirectory(DialogLib)
+add_subdirectory(MathLib)
+target_link_libraries(PolygonWithOperators PRIVATE DialogLib_1 MathLib_1)

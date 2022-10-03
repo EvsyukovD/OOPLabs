@@ -4,7 +4,7 @@
 #include "../DialogLib/dialog.hpp"
 
 namespace Lab3 {
-    bool Point::operator==(const Point &p) const {
+    /*bool Point::operator==(const Point &p) const {
         const float e = 1E-32;
         return std::fabs(x - p.x) < e && std::fabs(y - p.y) < e;
     }
@@ -21,7 +21,7 @@ namespace Lab3 {
         char *res = new char[len];
         sprintf_s(res, len, "(%.2f, %.2f)", p.x, p.y);
         return res;
-    }
+    }*/
 
     namespace SimplePolygon {
 
@@ -29,7 +29,7 @@ namespace Lab3 {
 
         }
 
-        bool Polygon::check(const Point &p) {
+        bool Polygon::check(const Math::Point &p) {
             for (int i = 0; i < top; i++) {
                 if (points[i] == p) {
                     return false;
@@ -38,7 +38,7 @@ namespace Lab3 {
             return true;
         }
 
-        bool Polygon::check(int num, const Point *p) {
+        bool Polygon::check(int num, const Math::Point *p) {
             for (int i = 0; i < num; i++) {
                 for (int j = i + 1; j < num; j++) {
                     if (p[i] == p[j]) {
@@ -49,12 +49,12 @@ namespace Lab3 {
             return true;
         }
 
-        Polygon::Polygon(const Point &p) {
+        Polygon::Polygon(const Math::Point &p) {
             points[top] = p;
             top++;
         }
 
-        Polygon::Polygon(int num, const Point *p) {
+        Polygon::Polygon(int num, const Math::Point *p) {
             if (num > NODES_MAX_NUM) {
                 throw std::length_error("too many points");
             }
@@ -70,7 +70,7 @@ namespace Lab3 {
             }
         }
 
-        Point Polygon::get(int index) const {
+        Math::Point Polygon::get(int index) const {
             if (index < 0 || index >= top) {
                 throw std::out_of_range("index out of bounds");
             }
@@ -81,7 +81,7 @@ namespace Lab3 {
             return top;
         }
 
-        void Polygon::rotate(Point &p, double alpha) {
+        void Polygon::rotate(Math::Point &p, double alpha) {
             float x = p.x, y = p.y;
             p.x = x * (float) cos(alpha) - y * (float) sin(alpha);
             p.y = y * (float) cos(alpha) + x * (float) sin(alpha);
@@ -97,18 +97,18 @@ namespace Lab3 {
             }
         }
 
-        void Polygon::move(const Point &end) {
+        void Polygon::move(const Math::Point &end) {
             for (int i = 0; i < top; i++) {
                 points[i].x += end.x;
                 points[i].y += end.y;
             }
         }
 
-        Point Polygon::getGravityCenter() const {
+        Math::Point Polygon::getGravityCenter() const {
             if (top == 0) {
                 throw std::logic_error("Polygon has 0 nodes");
             }
-            Point res;
+            Math::Point res;
             for (int i = 0; i < top; i++) {
                 res.x += points[i].x;
                 res.y += points[i].y;
@@ -118,7 +118,7 @@ namespace Lab3 {
             return res;
         }
 
-        void Polygon::set(const Point &p, int i) {
+        void Polygon::set(const Math::Point &p, int i) {
             if (i < 0 || i >= top) {
                 throw std::out_of_range("i out of bounds");
             }
@@ -137,7 +137,7 @@ namespace Lab3 {
                 strPointSize = strlen(strPoint);
                 resOldLen = strlen(res) + 1;
                 res = (char *) realloc(res, strPointSize + resOldLen);
-                memcpy((res + resOldLen - 1), strPoint, strPointSize);
+                strcpy(&res[resOldLen - 1], strPoint);
                 delete[] strPoint;
                 strPoint = nullptr;
             }
@@ -151,12 +151,16 @@ namespace Lab3 {
             delete[] s;
         }
 
+        void quit(Polygon &p) {
+
+        }
+
         void initPolygonByEmptyConstructor(Polygon &p) {
             p = Polygon();
         }
 
         void initPolygonByPoint(Polygon &p) {
-            Point point;
+            Math::Point point;
             std::cout << "Enter new x value of point:" << std::endl;
             if (!Dialog::read(point.x)) {
                 std::cerr << "Error" << std::endl;
@@ -174,18 +178,18 @@ namespace Lab3 {
             int num = -1;
             std::cout << "Enter number of points:" << std::endl;
             if (!Dialog::read(num) || num <= 0 || num > Polygon::NODES_MAX_NUM) {
-                std::cerr << "Error" << std::endl;
+                std::cerr << "Error: wrong number" << std::endl;
                 return;
             }
-            Point *points = new Point[num];
+            Math::Point *points = new Math::Point[num];
             for (int i = 0; i < num; i++) {
-                std::cout << "Enter new x value of point:" << std::endl;
+                std::cout << "Enter new x value of point " << i << " :" << std::endl;
                 if (!Dialog::read(points[i].x)) {
                     delete[] points;
                     std::cerr << "Error" << std::endl;
                     return;
                 }
-                std::cout << "Enter new y value of point:" << std::endl;
+                std::cout << "Enter new y value of point " << i << " :" << std::endl;
                 if (!Dialog::read(points[i].y)) {
                     delete[] points;
                     std::cerr << "Error" << std::endl;
@@ -201,15 +205,19 @@ namespace Lab3 {
         }
 
         void printPolygon(Polygon &p) {
-            std::cout << "Your polygon:" << std::endl;
-            p.print(std::cout);
-            std::cout << std::endl;
+            if (p.getNodesNum() == 0) {
+                std::cout << "Polygon doesn't have nodes" << std::endl;
+            } else {
+                std::cout << "Your polygon:" << std::endl;
+                p.print(std::cout);
+                std::cout << std::endl;
+            }
         }
 
         void getGravityCenter(Polygon &p) {
 
             try {
-                Point point = p.getGravityCenter();
+                Math::Point point = p.getGravityCenter();
                 char *s = point.toString();
                 std::cout << "Gravity center: " << s << std::endl;
                 delete[] s;
@@ -220,6 +228,10 @@ namespace Lab3 {
         }
 
         void getNodeByIndex(Polygon &p) {
+            if(p.getNodesNum() == 0){
+                std::cout << "Polygon doesn't have nodes" << std::endl;
+                return;
+            }
             int i;
             std::cout << "Enter index of point:" << std::endl;
             if (!Dialog::read(i)) {
@@ -227,7 +239,7 @@ namespace Lab3 {
                 return;
             }
             try {
-                Point point = p.get(i);
+                Math::Point point = p.get(i);
                 char *s = point.toString();
                 std::cout << "Your node: " << s << std::endl;
                 delete[] s;
@@ -237,6 +249,10 @@ namespace Lab3 {
         }
 
         void rotate(Polygon &p) {
+            if (p.getNodesNum() == 0) {
+                std::cout << "Polygon doesn't have nodes" << std::endl;
+                return;
+            }
             int k;
             std::cout << "Enter number of rotations on 90 degrees:" << std::endl;
             if (!Dialog::read(k)) {
@@ -254,7 +270,11 @@ namespace Lab3 {
         }
 
         void move(Polygon &p) {
-            Point point;
+            if (p.getNodesNum() == 0) {
+                std::cout << "Polygon doesn't have nodes" << std::endl;
+                return;
+            }
+            Math::Point point;
             std::cout << "Enter x value of ending point:" << std::endl;
             if (!Dialog::read(point.x)) {
                 std::cerr << "Error" << std::endl;
@@ -276,13 +296,17 @@ namespace Lab3 {
         }
 
         void set(Polygon &p) {
+            if(p.getNodesNum() == 0){
+                std::cout << "Polygon doesn't have nodes" << std::endl;
+                return;
+            }
             int i;
             std::cout << "Enter index of old node:" << std::endl;
             if (!Dialog::read(i)) {
                 std::cerr << "Error" << std::endl;
                 return;
             }
-            Point point;
+            Math::Point point;
             std::cout << "Enter x value of new point:" << std::endl;
             if (!Dialog::read(point.x)) {
                 std::cerr << "Error" << std::endl;
