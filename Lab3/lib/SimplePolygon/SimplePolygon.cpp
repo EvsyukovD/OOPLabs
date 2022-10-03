@@ -1,9 +1,9 @@
-#include "Polygon.hpp"
+#include "SimplePolygon.hpp"
 #include <cmath>
 #include <cstring>
 #include "../DialogLib/dialog.hpp"
 
-namespace Lab3 {
+
 
     namespace SimplePolygon {
 
@@ -371,4 +371,4 @@ namespace Lab3 {
             }
         }
     }
-}
+

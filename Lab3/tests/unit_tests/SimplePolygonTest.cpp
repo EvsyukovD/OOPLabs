@@ -1,15 +1,15 @@
-#include "../../lib/SimplePolygon/Polygon.hpp"
+#include "../../lib/SimplePolygon/SimplePolygon.hpp"
 #include "gtest/gtest.h"
 
 TEST(SimplePolygonConstructors, EmptyConstructor) {
-    Lab3::SimplePolygon::Polygon polygon;
+    SimplePolygon::Polygon polygon;
     ASSERT_EQ(0, polygon.getNodesNum());
     ASSERT_THROW(polygon.get(0), std::out_of_range);
 }
 
 TEST(SimplePolygonConstructors, OnePointConstructor) {
     Math::Point p(1.0, 1.0);
-    Lab3::SimplePolygon::Polygon polygon(p);
+    SimplePolygon::Polygon polygon(p);
     ASSERT_EQ(1, polygon.getNodesNum());
     const double error = 0.1;
     Math::Point a = polygon.get(0);
@@ -25,22 +25,22 @@ TEST(SimplePolygonConstructors, ArrayOfPointsConstructor) {
                              {2.0, 2.5},
                              {1.0, 1.0}};
     const double error = 0.1;
-    Lab3::SimplePolygon::Polygon polygon(2, points1);
+    SimplePolygon::Polygon polygon(2, points1);
     Math::Point a = polygon.get(0);
     Math::Point b = polygon.get(1);
     ASSERT_NEAR(points1[0].x, a.x, error);
     ASSERT_NEAR(points1[0].y, a.y, error);
     ASSERT_NEAR(points1[1].x, b.x, error);
     ASSERT_NEAR(points1[1].y, b.y, error);
-    ASSERT_THROW(Lab3::SimplePolygon::Polygon(30, points2), std::length_error);
-    ASSERT_THROW(Lab3::SimplePolygon::Polygon(3, points3), std::logic_error);
+    ASSERT_THROW(SimplePolygon::Polygon(30, points2), std::length_error);
+    ASSERT_THROW(SimplePolygon::Polygon(3, points3), std::logic_error);
 }
 
 TEST(SimplePolygonMethods, Getters) {
     Math::Point points[] = {{0.0, 0.0},
                             {0.1, 3.4},
                             {0.3, 4.6}};
-    Lab3::SimplePolygon::Polygon polygon(3, points);
+    SimplePolygon::Polygon polygon(3, points);
     const double error = 0.1;
     Math::Point a = polygon.get(0);
     Math::Point b = polygon.get(1);
@@ -64,7 +64,7 @@ TEST(SimplePolygonMethods, Setters) {
     Math::Point points[] = {{0.0, 0.0},
                             {0.1, 3.4},
                             {0.3, 4.6}};
-    Lab3::SimplePolygon::Polygon polygon(3, points);
+    SimplePolygon::Polygon polygon(3, points);
     Math::Point p(1.0, 1.0), t(0.1, 3.4);
     polygon.set(p, 0);
     Math::Point a = polygon.get(0);
@@ -84,7 +84,7 @@ TEST(SimplePolygonMethods, AddersAndReaders) {
     for (int i = 0; i < 20; i++) {
         points2[i] = Math::Point((float) i, (float) (i + 1));
     }
-    Lab3::SimplePolygon::Polygon p1(3, points), p2(20, points2);
+    SimplePolygon::Polygon p1(3, points), p2(20, points2);
     Math::Point test1(1.2, 4.0), test2(1.0, 3.5);
     p1.add(test1);
     Math::Point g = p1.get(3);
@@ -97,7 +97,7 @@ TEST(SimplePolygonMethods, AddersAndReaders) {
     std::string repeated = "2 0.0 0.0 0.0 0.0\n";
     std::string bigNum = "21 0.0 0.0 0.0 0.0\n";
     std::istringstream correctStr(correct), repeatedStr(repeated), bigNumStr(bigNum);
-    Lab3::SimplePolygon::Polygon p3;
+    SimplePolygon::Polygon p3;
     ASSERT_THROW(p1.read(repeatedStr, p3), std::logic_error);
     ASSERT_THROW(p1.read(bigNumStr, p3), std::invalid_argument);
     p1.read(correctStr, p3);
@@ -111,8 +111,7 @@ TEST(SimplePolygonMethods, AddersAndReaders) {
 TEST(SimplePolygonMethods, Transformations) {
     Math::Point points[] = {{0.0, 0.0},
                             {0.0, 1.0},
-                            {1.0, 1.0}};
-    Lab3::SimplePolygon::Polygon polygon(3, points);
+                            {1.0, 1.0}};SimplePolygon::Polygon polygon(3, points);
 
     polygon.rotate(1);
 
@@ -128,7 +127,7 @@ TEST(SimplePolygonMethods, Transformations) {
     ASSERT_NEAR(newPoints[2].x, -1.0, error);
     ASSERT_NEAR(newPoints[2].y, 1.0, error);
 
-    polygon = Lab3::SimplePolygon::Polygon(3, points);
+    polygon = SimplePolygon::Polygon(3, points);
     polygon.move({0.0, 1.0});
     newPoints[0] = polygon.get(0);
     newPoints[1] = polygon.get(1);
@@ -144,7 +143,7 @@ TEST(SimplePolygonMethods, Transformations) {
 
 TEST(SimplePolygonMethods, StringPerfomance) {
     Math::Point points[] = {{2.5, 1.0}};
-    Lab3::SimplePolygon::Polygon polygon(1, points);
+    SimplePolygon::Polygon polygon(1, points);
     char *s = polygon.toString();
     ASSERT_STREQ(s, "(2.50, 1.00)");
     delete[] s;

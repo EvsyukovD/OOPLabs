@@ -4,8 +4,7 @@
 #include <iostream>
 #include "MathLib/math.hpp"
 
-namespace Lab3 {
-    namespace SimplePolygon {
+namespace SimplePolygon {
         class Polygon {
         public:
             static const int NODES_MAX_NUM = 20;
@@ -213,5 +212,4 @@ namespace Lab3 {
          * */
         void read(Polygon &p);
     }
-}
 #endif
