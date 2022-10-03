@@ -76,6 +76,38 @@ TEST(SimplePolygonMethods, Setters) {
     ASSERT_THROW(polygon.set(p, -4), std::out_of_range);
 }
 
+TEST(SimplePolygonMethods, AddersAndReaders) {
+    Math::Point points[] = {{0.0, 0.0},
+                            {0.1, 3.4},
+                            {0.3, 4.6}};
+    Math::Point points2[20];
+    for (int i = 0; i < 20; i++) {
+        points2[i] = Math::Point((float) i, (float) (i + 1));
+    }
+    Lab3::SimplePolygon::Polygon p1(3, points), p2(20, points2);
+    Math::Point test1(1.2, 4.0), test2(1.0, 3.5);
+    p1.add(test1);
+    Math::Point g = p1.get(3);
+    const double error = 0.001;
+    ASSERT_NEAR(g.x, test1.x, error);
+    ASSERT_NEAR(g.y, test1.y, error);
+    ASSERT_THROW(p1.add(test1), std::logic_error);
+    ASSERT_THROW(p2.add(test2), std::length_error);
+    std::string correct = "2 0.0 0.0 1.0 1.0\n";
+    std::string repeated = "2 0.0 0.0 0.0 0.0\n";
+    std::string bigNum = "21 0.0 0.0 0.0 0.0\n";
+    std::istringstream correctStr(correct), repeatedStr(repeated), bigNumStr(bigNum);
+    Lab3::SimplePolygon::Polygon p3;
+    ASSERT_THROW(p1.read(repeatedStr, p3), std::logic_error);
+    ASSERT_THROW(p1.read(bigNumStr, p3), std::invalid_argument);
+    p1.read(correctStr, p3);
+    Math::Point t0 = p3.get(0), t1 = p3.get(1);
+    ASSERT_NEAR(t0.x, 0.0, error);
+    ASSERT_NEAR(t0.y, 0.0, error);
+    ASSERT_NEAR(t1.x, 1.0, error);
+    ASSERT_NEAR(t1.y, 1.0, error);
+}
+
 TEST(SimplePolygonMethods, Transformations) {
     Math::Point points[] = {{0.0, 0.0},
                             {0.0, 1.0},

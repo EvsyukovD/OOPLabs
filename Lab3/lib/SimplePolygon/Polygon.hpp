@@ -5,8 +5,6 @@
 #include "MathLib/math.hpp"
 
 namespace Lab3 {
-
-    class Polygon;
     namespace SimplePolygon {
         class Polygon {
         public:
@@ -52,7 +50,7 @@ namespace Lab3 {
             /**
              * Получение вершины многоугольника с индексом index
              * @param index - индекс вершины в массиве
-             * @throws std::out_of_range - если index < 0 или
+             * @throws std::out_of_range - если index меньше 0 или
              * index больше либо равен числу вершин в многоугольнике
              * */
             Math::Point get(int index) const;
@@ -96,17 +94,23 @@ namespace Lab3 {
 
             /**
              * Добавление новой вершины в конец массива
+             * @throws std::logic_error - если есть повторяющиеся вершины
+             * @throws std::length_error - если массив точек полностью заполнен
              * @param p - новая точка
              * */
-            void add(const Math::Point& p);
+            void add(const Math::Point &p);
 
             /**
              * Чтение экземпляра класса из входного потока
              * @param in - ссылка на входной поток
-             * @throws std::invalid_argument - если чтение прошло неудачно
+             * @throws std::invalid_argument - если чтение прошло неудачно или \n
+             * если задано некорректное количество точек
+             * @throws std::logic_error - если есть повторяющиеся вершины
+             * @throws std::length_error - если массив точек полностью заполнен
              * @return Изменённый входной поток
              * */
-             std::istream & read(std::istream& in,Polygon& p);
+            std::istream &read(std::istream &in, Polygon &p);
+
         private:
             /**
              * Проверка наличия повторяющихся вершин в массиве p
@@ -196,75 +200,18 @@ namespace Lab3 {
          * @param p - исходный многоугольник
          * */
         void set(Polygon &p);
-    }
-    namespace PolygonWithOperators {
-        class Polygon {
-        public:
-            static const int NODES_MAX_NUM = 20;
-        private:
-            Math::Point points[NODES_MAX_NUM];
-            int top = 0;
-        public:
-            Polygon();
 
-            Polygon(const Math::Point &p);
+        /**
+         * Диалоговая функция добавления новой вершины в конец массива
+         * @param p - исходный многоугольник
+         * */
+        void add(Polygon &p);
 
-            Polygon(int num, const Math::Point *p);
-
-
-            friend std::ostream &operator<<(std::ostream &output, const Polygon &p);
-
-            Math::Point gravityCenter() const;
-
-            Math::Point operator[](int index) const;
-
-            void rotate(int k);
-
-            void move(const Math::Point &end);
-
-            int getNodesNum() const;
-
-        private:
-            bool check(int num, const Math::Point *p);
-
-            bool check(const Math::Point &p);
-        };
-    }
-    namespace DynamicPolygon {
-        class Polygon {
-        private:
-            Math::Point *points;
-            int top = 0;
-        public:
-            Polygon();
-
-            Polygon(const Math::Point &p);
-
-            Polygon(int num, const Math::Point *p);
-
-            Polygon(const Polygon &p);
-
-            Polygon(const Polygon &&p);
-
-            ~Polygon();
-
-            void print(std::ostream &output) const;
-
-            Math::Point gravityCenter() const;
-
-            Math::Point get(int index) const;
-
-            void rotate(int k);
-
-            void move(const Math::Point &end);
-
-            int getNodesNum() const;
-
-        private:
-            bool check(int num, const Math::Point *p);
-
-            bool check(const Math::Point &p);
-        };
+        /**
+         * Диалоговая функция чтения экземпляра класса из консоли
+         * @param p - исходный многоугольник
+         * */
+        void read(Polygon &p);
     }
 }
 #endif

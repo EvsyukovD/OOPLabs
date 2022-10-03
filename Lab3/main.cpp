@@ -16,7 +16,9 @@ int main() {
                                                                     SIMPLE_POLYGON::rotate,
                                                                     SIMPLE_POLYGON::move,
                                                                     SIMPLE_POLYGON::getNodesNum,
-                                                                    SIMPLE_POLYGON::set};
+                                                                    SIMPLE_POLYGON::set,
+                                                                    SIMPLE_POLYGON::add,
+                                                                    SIMPLE_POLYGON::read};
     const char* menu[] = {"0.Quit",
                           "1.Init polygon by empty constructor",
                           "2.Init polygon by point",
@@ -27,7 +29,9 @@ int main() {
                           "7.Rotate polygon",
                           "8.Move polygon",
                           "9.Get number of nodes",
-                          "10.Replace node in polygon"};
+                          "10.Replace node in polygon",
+                          "11.Add new node",
+                          "12.Read example of Polygon class from console"};
     int size = sizeof(menu) / sizeof(char*);
     int rc;
     SIMPLE_POLYGON::Polygon p;

@@ -4,24 +4,6 @@
 #include "../DialogLib/dialog.hpp"
 
 namespace Lab3 {
-    /*bool Point::operator==(const Point &p) const {
-        const float e = 1E-32;
-        return std::fabs(x - p.x) < e && std::fabs(y - p.y) < e;
-    }
-
-    char *Point::toString() const {
-        const Point &p = *this;
-        const char *pattern = "(, )";
-        int len = strlen(pattern) + 1;
-        char num[20];
-        sprintf_s(num, 20, "%.2f", p.x);
-        len += strlen(num);
-        sprintf_s(num, 20, "%.2f", p.y);
-        len += strlen(num);
-        char *res = new char[len];
-        sprintf_s(res, len, "(%.2f, %.2f)", p.x, p.y);
-        return res;
-    }*/
 
     namespace SimplePolygon {
 
@@ -148,6 +130,9 @@ namespace Lab3 {
             if (!in.good() || num <= 0) {
                 throw std::invalid_argument("wrong number of points");
             }
+            if (num > NODES_MAX_NUM) {
+                throw std::invalid_argument("too many points");
+            }
             p = Polygon();
             for (int i = 0; i < num; i++) {
                 point.read(in);
@@ -158,7 +143,7 @@ namespace Lab3 {
 
         char *Polygon::toString() const {
             char *res = new char[1]{'\0'}, *strPoint = nullptr;
-            int strPointSize = 0, resOldLen = 1;
+            size_t strPointSize = 0, resOldLen = 1;
             for (int i = 0; i < top; i++) {
                 strPoint = points[i].toString();
                 strPointSize = strlen(strPoint);
@@ -349,6 +334,38 @@ namespace Lab3 {
                 std::cout << "New polygon:" << std::endl;
                 p.print(std::cout);
                 std::cout << std::endl;
+            } catch (std::exception &e) {
+                std::cerr << "Error: " << e.what() << std::endl;
+            }
+        }
+
+        void read(Polygon &p) {
+            std::cout << "Enter the number of elements and coordinates of the points, separated by a space" << std::endl;
+            Polygon polygon;
+            try {
+                p.read(std::cin, polygon);
+                std::cout << "Your polygon:" << std::endl;
+                polygon.print(std::cout);
+                std::cout << std::endl;
+            } catch (std::exception &e) {
+                std::cerr << "Error: " << e.what() << std::endl;
+            }
+        }
+
+        void add(Polygon &p) {
+            Math::Point point;
+            std::cout << "Enter x value of point:" << std::endl;
+            if (!Dialog::read(point.x)) {
+                std::cerr << "Error" << std::endl;
+                return;
+            }
+            std::cout << "Enter y value of point:" << std::endl;
+            if (!Dialog::read(point.y)) {
+                std::cerr << "Error" << std::endl;
+                return;
+            }
+            try {
+                p.add(point);
             } catch (std::exception &e) {
                 std::cerr << "Error: " << e.what() << std::endl;
             }

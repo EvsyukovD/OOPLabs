@@ -14,7 +14,7 @@ namespace Math{
     char *Point::toString() const {
         const Point &p = *this;
         const char *pattern = "(, )";
-        int len = strlen(pattern) + 1;
+        size_t len = strlen(pattern) + 1;
         char num[20];
         sprintf_s(num, 20, "%.2f", p.x);
         len += strlen(num);
