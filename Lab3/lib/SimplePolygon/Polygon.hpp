@@ -13,6 +13,7 @@ namespace Lab3 {
             static const int NODES_MAX_NUM = 20;
         private:
             Math::Point points[NODES_MAX_NUM];
+            //свободная позиция в массиве
             int top = 0;
         public:
             /**
@@ -92,7 +93,20 @@ namespace Lab3 {
              * @return Строка с точками многоугольника
              * */
             char *toString() const;
-            
+
+            /**
+             * Добавление новой вершины в конец массива
+             * @param p - новая точка
+             * */
+            void add(const Math::Point& p);
+
+            /**
+             * Чтение экземпляра класса из входного потока
+             * @param in - ссылка на входной поток
+             * @throws std::invalid_argument - если чтение прошло неудачно
+             * @return Изменённый входной поток
+             * */
+             std::istream & read(std::istream& in,Polygon& p);
         private:
             /**
              * Проверка наличия повторяющихся вершин в массиве p

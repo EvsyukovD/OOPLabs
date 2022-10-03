@@ -129,6 +129,33 @@ namespace Lab3 {
             points[i].y = p.y;
         }
 
+        void Polygon::add(const Math::Point &p) {
+            if (top == NODES_MAX_NUM) {
+                throw std::length_error("array overflow");
+            }
+            if (!check(p)) {
+                throw std::logic_error("this point already exists");
+            }
+            points[top].x = p.x;
+            points[top].y = p.y;
+            top++;
+        }
+
+        std::istream &Polygon::read(std::istream &in, Polygon &p) {
+            int num;
+            Math::Point point;
+            in >> num;
+            if (!in.good() || num <= 0) {
+                throw std::invalid_argument("wrong number of points");
+            }
+            p = Polygon();
+            for (int i = 0; i < num; i++) {
+                point.read(in);
+                p.add(point);
+            }
+            return in;
+        }
+
         char *Polygon::toString() const {
             char *res = new char[1]{'\0'}, *strPoint = nullptr;
             int strPointSize = 0, resOldLen = 1;
@@ -228,7 +255,7 @@ namespace Lab3 {
         }
 
         void getNodeByIndex(Polygon &p) {
-            if(p.getNodesNum() == 0){
+            if (p.getNodesNum() == 0) {
                 std::cout << "Polygon doesn't have nodes" << std::endl;
                 return;
             }
@@ -296,7 +323,7 @@ namespace Lab3 {
         }
 
         void set(Polygon &p) {
-            if(p.getNodesNum() == 0){
+            if (p.getNodesNum() == 0) {
                 std::cout << "Polygon doesn't have nodes" << std::endl;
                 return;
             }

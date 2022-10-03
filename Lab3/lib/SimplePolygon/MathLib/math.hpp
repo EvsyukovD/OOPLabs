@@ -1,6 +1,9 @@
 #ifndef POINT_HPP
 #define POINT_HPP
-namespace Math{
+
+#include <iostream>
+
+namespace Math {
     struct Point {
         float x;
         float y;
@@ -21,7 +24,17 @@ namespace Math{
           * */
         char *toString() const;
 
+
         bool operator==(const Point &p) const;
+
+        /**
+        * Чтение точки из входного потока
+        * @param in - входной поток
+        * @param p - переменная, куда считывается точка
+        * @throws std::invlaid_argument - если не удалось считать входные координаты
+        * @return Изменённый входной поток
+        * */
+        std::istream &read(std::istream &in);
     };
 }
 #endif
