@@ -44,6 +44,10 @@ TEST(VerzieraMethods, Parameters) {
     char *s = v.toString();
     ASSERT_STREQ("y = 1.00 / (x ^ 2 + 1.00)", s);
     delete[] s;
+    v.setA(2);
+    s = v.toString();
+    ASSERT_STREQ("y = 8.00 / (x ^ 2 + 4.00)",s);
+    delete[] s;
 }
 
 int main(int argc, char *argv[]) {

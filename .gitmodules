@@ -1,3 +1,6 @@
 [submodule "Lab3/tests/lib/googletest"]
 	path = Lab3/tests/lib/googletest
 	url = https://github.com/google/googletest.git
+[submodule "Lab2/LabTests/lib/googletest"]
+	path = Lab2/LabTests/lib/googletest
+	url = https://github.com/google/googletest.git

@@ -39,8 +39,6 @@ namespace Lab2 {
             }
         }
 
-        Verziera(const Verziera &v) : yA(v.yA) {}
-
         /**
          * Функция, возвращающая точку A
          * @return Point структура точки A
