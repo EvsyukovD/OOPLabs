@@ -26,6 +26,7 @@ namespace Math {
 
         bool operator==(const Point &p) const;
 
+
         /**
         * Чтение точки из входного потока
         * @param in - входной поток

@@ -110,6 +110,20 @@ TEST(PolygonWithOperatorsOperators, Transformations) {
     delete[] points2;
 }
 
+TEST(PolygonWithOperatorsOperators, BoolOperators) {
+    Math::Point points1[] = {{0, 0},
+                             {1, 0}};
+    Math::Point points2[] = {{0, 0},
+                             {2, 0}};
+    PolygonWithOperators::Polygon polygon1(2, points1),
+            polygon2(2, points1), polygon3(2, points2),
+            polygon4;
+    EXPECT_TRUE(polygon1 == polygon2);
+    EXPECT_TRUE(polygon1 < polygon3);
+    EXPECT_TRUE(polygon3 > polygon1);
+    EXPECT_TRUE(polygon4 < polygon1);
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest();
     return RUN_ALL_TESTS();

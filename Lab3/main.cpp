@@ -1,42 +1,39 @@
 #include <iostream>
-#include "lib/SimplePolygon/SimplePolygon.hpp"
-#include "lib/SimplePolygon/DialogLib/dialog.hpp"
+#include "lib/PolygonWithOperators/PolygonWithOperators.hpp"
+#include "lib/PolygonWithOperators/DialogLib/dialog.hpp"
 #define _CRTDBG_MAP_ALLOC
 #include <crtdbg.h>
 int main() {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    void (*simplePolygonFuncs[])(SimplePolygon::Polygon&) = {SimplePolygon::quit,
-                                                             SimplePolygon::initPolygonByEmptyConstructor,
-                                                             SimplePolygon::initPolygonByPoint,
-                                                             SimplePolygon::initPolygonByArray,
-                                                             SimplePolygon::printPolygon,
-                                                             SimplePolygon::getGravityCenter,
-                                                             SimplePolygon::getNodeByIndex,
-                                                             SimplePolygon::rotate,
-                                                             SimplePolygon::move,
-                                                             SimplePolygon::getNodesNum,
-                                                             SimplePolygon::set,
-                                                             SimplePolygon::add,
-                                                             SimplePolygon::read};
+    void (*fptrs[])(PolygonWithOperators::Polygon&) = {PolygonWithOperators::quit,
+                                                       PolygonWithOperators::init,
+                                                       PolygonWithOperators::printPolygon,
+                                                       PolygonWithOperators::getGravityCenter,
+                                                       PolygonWithOperators::getNodeByIndex,
+                                                       PolygonWithOperators::rotate,
+                                                       PolygonWithOperators::move,
+                                                       PolygonWithOperators::getNodesNum,
+                                                       PolygonWithOperators::set,
+                                                       PolygonWithOperators::add,
+                                                       PolygonWithOperators::read};
     const char* menu[] = {"0.Quit",
-                          "1.Init polygon by empty constructor",
-                          "2.Init polygon by point",
-                          "3.Init polygon by array",
-                          "4.Print polygon",
-                          "5.Get gravity center",
-                          "6.Get node by index",
-                          "7.Rotate polygon",
-                          "8.Move polygon",
-                          "9.Get number of nodes",
-                          "10.Replace node in polygon",
-                          "11.Add new node",
-                          "12.Read example of Polygon class from console"};
+                          "1.Init polygon",
+                          "2.Print polygon",
+                          "3.Get gravity center",
+                          "4.Get node by index",
+                          "5.Rotate polygon",
+                          "6.Move polygon",
+                          "7.Get number of nodes",
+                          "8.Replace node in polygon",
+                          "9.Add new node",
+                          "10.Read example of Polygon class from console"};
+
     int size = sizeof(menu) / sizeof(char*);
     int rc;
-    SimplePolygon::Polygon p;
+    PolygonWithOperators::Polygon p;
     do {
         while ((rc = Dialog::dialog(menu, size)) != -1 && rc != 0) {
-            simplePolygonFuncs[rc](p);
+            fptrs[rc](p);
         }
     } while (rc != 0 && rc != -1);
     std::cout << "End of programm" << std::endl;

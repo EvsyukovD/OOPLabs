@@ -214,6 +214,19 @@ namespace SimplePolygon {
         delete[] points;
     }
 
+    void init(Polygon &p) {
+        void (*fptrs[])(Polygon &) = {initPolygonByEmptyConstructor,
+                                      initPolygonByPoint,
+                                      initPolygonByArray};
+        const char *menu[] = {"0.Init polygon by empty constructor",
+                              "1.Init polygon by point",
+                              "2.Init polygon by array"};
+        int size = sizeof(menu) / sizeof(char *), rc;
+        while ((rc = Dialog::dialog(menu, size)) != -1 && rc != 0) {
+            fptrs[rc](p);
+        }
+    }
+
     void printPolygon(Polygon &p) {
         if (p.getNodesNum() == 0) {
             std::cout << "Polygon doesn't have nodes" << std::endl;
@@ -368,5 +381,6 @@ namespace SimplePolygon {
             std::cerr << "Error: " << e.what() << std::endl;
         }
     }
+
 }
 
