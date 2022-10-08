@@ -1,8 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
 project(unit_tests)
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
-set(TESTS_FILES SimplePolygonTest.cpp)
-add_executable(runUnitTesting ${TESTS_FILES})
-
-target_link_libraries(runUnitTesting gtest gtest_main)
-target_link_libraries(runUnitTesting SimplePolygon)
+add_subdirectory(PolygonWithOperatorsTests)
+add_subdirectory(SimplePolygonTests)
+include_directories(../../lib/SimplePolygon ../../lib/PolygonWithOperators)

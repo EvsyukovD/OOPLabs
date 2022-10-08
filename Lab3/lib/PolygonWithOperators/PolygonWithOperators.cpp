@@ -236,8 +236,10 @@ namespace PolygonWithOperators {
         Polygon x(*this);
         int delta = Polygon::NODES_MAX_NUM - top;
         for (int i = 0; i < delta && i < p.top; i++) {
-            if (x.check(p.points[i])) {
-                x.points[i + top] = p.points[i];
+            try{
+                x.add(p.points[i]);
+            }catch(std::exception& e){
+
             }
         }
         return x;

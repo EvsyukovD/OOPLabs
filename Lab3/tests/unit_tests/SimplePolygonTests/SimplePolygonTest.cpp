@@ -1,4 +1,4 @@
-#include "../../lib/SimplePolygon/SimplePolygon.hpp"
+#include "SimplePolygon.hpp"
 #include "gtest/gtest.h"
 
 TEST(SimplePolygonConstructors, EmptyConstructor) {

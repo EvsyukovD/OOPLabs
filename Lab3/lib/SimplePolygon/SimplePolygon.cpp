@@ -1,7 +1,7 @@
 #include "SimplePolygon.hpp"
 #include <cmath>
 #include <cstring>
-#include "../DialogLib/dialog.hpp"
+#include "DialogLib/dialog.hpp"
 
 namespace SimplePolygon {
 
