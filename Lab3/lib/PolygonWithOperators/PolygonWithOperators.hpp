@@ -227,7 +227,7 @@ namespace PolygonWithOperators {
          * Если количество вершин многоугольника ровно 0, то\n
          * возращается nullptr
          * */
-        explicit operator Math::Point *();
+        explicit operator const Math::Point *();
 
     private:
         /**

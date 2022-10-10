@@ -177,13 +177,12 @@ namespace PolygonWithOperators {
         return output;
     }
 
-    Polygon::operator Math::Point *() {
-        Math::Point *p = nullptr;
+    Polygon::operator const Math::Point *() {
+        const Math::Point *p;
         if (top) {
-            p = new Math::Point[top];
-            for (int i = 0; i < top; i++) {
-                p[i] = points[i];
-            }
+            p = points;
+        } else {
+            p = nullptr;
         }
         return p;
     }

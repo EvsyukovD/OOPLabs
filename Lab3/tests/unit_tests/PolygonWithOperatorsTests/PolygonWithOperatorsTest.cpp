@@ -101,13 +101,12 @@ TEST(PolygonWithOperatorsOperators, Transformations) {
     Math::Point points1[] = {{0, 0},
                              {0, 1}};
     PolygonWithOperators::Polygon polygon1(2, points1);
-    Math::Point *points2 = (Math::Point *) polygon1;
+    const Math::Point *points2 = (const Math::Point *) polygon1;
     const double error = 0.1;
     EXPECT_NEAR(points2[0].x, points1[0].x, error);
     EXPECT_NEAR(points2[0].y, points1[0].y, error);
     EXPECT_NEAR(points2[1].x, points1[1].x, error);
     EXPECT_NEAR(points2[1].y, points1[1].y, error);
-    delete[] points2;
 }
 
 TEST(PolygonWithOperatorsOperators, BoolOperators) {
