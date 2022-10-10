@@ -15,7 +15,12 @@ int main() {
                                                        PolygonWithOperators::getNodesNum,
                                                        PolygonWithOperators::set,
                                                        PolygonWithOperators::add,
-                                                       PolygonWithOperators::read};
+                                                       PolygonWithOperators::read,
+                                                       PolygonWithOperators::unaryPlus,
+                                                       PolygonWithOperators::unaryMinus,
+                                                       PolygonWithOperators::binaryPlus,
+                                                       PolygonWithOperators::addToThisPolygon,
+                                                       PolygonWithOperators::compare};
     const char* menu[] = {"0.Quit",
                           "1.Init polygon",
                           "2.Print polygon",
@@ -26,7 +31,12 @@ int main() {
                           "7.Get number of nodes",
                           "8.Replace node in polygon",
                           "9.Add new node",
-                          "10.Read example of Polygon class from console"};
+                          "10.Read example of Polygon class from console",
+                          "11.Operator unary plus",
+                          "12.Operator unary minus",
+                          "13.Operator binary plus",
+                          "14.Operator mod equation(+=)",
+                          "15.Compare this polygon with your polygon"};
 
     int size = sizeof(menu) / sizeof(char*);
     int rc;

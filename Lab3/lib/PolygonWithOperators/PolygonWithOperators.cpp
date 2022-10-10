@@ -247,6 +247,9 @@ namespace PolygonWithOperators {
     }
 
     Polygon &Polygon::operator+=(const Polygon &p) {
+        //Добавляются вершины из того же \n
+        // самого многоугольника -> ни одна вершина\n
+        // не будет добавлена
         if (this == &p) {
             return *this;
         }
@@ -265,10 +268,10 @@ namespace PolygonWithOperators {
         const float e = 1E-32;
         float d1 = g1.x * g1.x + g1.y * g1.y;
         float d2 = g2.x * g2.x + g2.y * g2.y;
-        if (fabs(d1 - d2) < e) {
+        if (std::fabs(d1 - d2) < e) {
             return true;
         }
-        return true;
+        return false;
     }
 
     bool Polygon::operator<(const Polygon &p) const {
@@ -285,7 +288,7 @@ namespace PolygonWithOperators {
         const float e = 1E-32;
         float d1 = g1.x * g1.x + g1.y * g1.y;
         float d2 = g2.x * g2.x + g2.y * g2.y;
-        if (d1 - d2 < e) {
+        if (d1 - d2 < -e) {
             return true;
         }
         return false;
@@ -508,12 +511,9 @@ namespace PolygonWithOperators {
         std::cout << "Enter the number of elements and coordinates of the points, separated by a space" << std::endl;
         Polygon polygon;
         try {
-            //p.read(std::cin, polygon);
             std::cin >> polygon;
             std::cout << "Your polygon:" << std::endl;
-            //polygon.print(std::cout);
             std::cout << polygon << std::endl;
-            //std::cout << std::endl;
         } catch (std::exception &e) {
             std::cerr << "Error: " << e.what() << std::endl;
         }
@@ -533,6 +533,72 @@ namespace PolygonWithOperators {
         }
         try {
             p.add(point);
+        } catch (std::exception &e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+        }
+    }
+
+    void unaryPlus(Polygon &p) {
+        ++p;
+    }
+
+
+    void unaryMinus(Polygon &p) {
+        --p;
+    }
+
+    void binaryPlus(Polygon &p) {
+        std::cout << "Enter the number of elements and coordinates of the points, separated by a space" << std::endl;
+        Polygon polygon1, polygon2, polygon3;
+        try {
+            std::cout << "First polygon:" << std::endl;
+            std::cin >> polygon1;
+            std::cout << "Your polygon1:" << std::endl;
+            std::cout << polygon1 << std::endl;
+
+            std::cout << "Second polygon:" << std::endl;
+            std::cin >> polygon2;
+            std::cout << "Your polygon2:" << std::endl;
+            std::cout << polygon2 << std::endl;
+            polygon3 = polygon1 + polygon2;
+            std::cout << "Result:" << std::endl;
+            std::cout << polygon3 << std::endl;
+        } catch (std::exception &e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+        }
+    }
+
+    void addToThisPolygon(Polygon &p) {
+        std::cout << "Enter the number of elements and coordinates of the points, separated by a space" << std::endl;
+        Polygon polygon;
+        try {
+            std::cin >> polygon;
+            std::cout << "Your polygon:" << std::endl;
+            std::cout << polygon << std::endl;
+            p += polygon;
+            std::cout << "Result:" << std::endl;
+            std::cout << p << std::endl;
+        } catch (std::exception &e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+        }
+    }
+
+    void compare(Polygon &p) {
+        std::cout << "Enter the number of elements and coordinates of the points, separated by a space" << std::endl;
+        Polygon polygon;
+        try {
+            std::cin >> polygon;
+            std::cout << "Your polygon:" << std::endl;
+            std::cout << polygon << std::endl;
+            if (p > polygon) {
+                std::cout << "This polygon 'bigger' than your:" << p << " > " << polygon << std::endl;
+            }
+            if (p < polygon) {
+                std::cout << "This polygon 'less' than your:" << p << " < " << polygon << std::endl;
+            }
+            if (p == polygon) {
+                std::cout << "This polygon equals to your:" << p << " = " << polygon << std::endl;
+            }
         } catch (std::exception &e) {
             std::cerr << "Error: " << e.what() << std::endl;
         }
