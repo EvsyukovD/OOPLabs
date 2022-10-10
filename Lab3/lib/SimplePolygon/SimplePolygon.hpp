@@ -10,7 +10,7 @@
  * что вершина points[0] соединена с points[1], points[1] соединена с
  * points[2] ... Также подразумевается, что соединенны первая и последние
  * вершины.
- * @author <a href=https://github.com/EvsyukovD>EvsyukovD </a>
+ * @author <a href=https://github.com/EvsyukovD>EvsyukovD</a>
  * */
 namespace SimplePolygon {
     class Polygon {
