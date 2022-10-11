@@ -345,13 +345,13 @@ namespace PolygonWithOperators {
         }
         Math::Point *points = new Math::Point[num];
         for (int i = 0; i < num; i++) {
-            std::cout << "Enter new x value of point " << i << " :" << std::endl;
+            std::cout << "Enter x value of point " << i << " :" << std::endl;
             if (!Dialog::read(points[i].x)) {
                 delete[] points;
                 std::cerr << "Error" << std::endl;
                 return;
             }
-            std::cout << "Enter new y value of point " << i << " :" << std::endl;
+            std::cout << "Enter y value of point " << i << " :" << std::endl;
             if (!Dialog::read(points[i].y)) {
                 delete[] points;
                 std::cerr << "Error" << std::endl;
@@ -384,9 +384,7 @@ namespace PolygonWithOperators {
             std::cout << "Polygon doesn't have nodes" << std::endl;
         } else {
             std::cout << "Your polygon:" << std::endl;
-            //p.print(std::cout);
             std::cout << p << std::endl;
-            //std::cout << std::endl;
         }
     }
 
@@ -438,9 +436,7 @@ namespace PolygonWithOperators {
         try {
             p(k);
             std::cout << "Rotated polygon:" << std::endl;
-            //p.print(std::cout);
             std::cout << p << std::endl;
-            //std::cout << std::endl;
         } catch (std::invalid_argument &e) {
             std::cerr << "Error: " << e.what() << std::endl;
         }
@@ -464,9 +460,7 @@ namespace PolygonWithOperators {
         }
         p.move(point);
         std::cout << "Moved polygon:" << std::endl;
-        //p.print(std::cout);
         std::cout << p << std::endl;
-        //std::cout << std::endl;
     }
 
     void getNodesNum(Polygon &p) {
@@ -498,9 +492,7 @@ namespace PolygonWithOperators {
         try {
             p.set(point, i);
             std::cout << "New polygon:" << std::endl;
-            //p.print(std::cout);
             std::cout << p << std::endl;
-            //std::cout << std::endl;
         } catch (std::exception &e) {
             std::cerr << "Error: " << e.what() << std::endl;
         }

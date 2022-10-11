@@ -30,21 +30,21 @@ TEST(PolygonWithOperatorsOperators, IOOperators) {
 }
 
 TEST(PolygonWithOperatorsOperators, UnaryPlusAndMinus) {
-    Math::Point points[] = {{0, 0},
+    Math::Point points[] = {{0, -1},
                             {0, 1}};
     PolygonWithOperators::Polygon polygon1(2, points), polygon2(2, points);
     std::ostringstream output1, output2, output3, output4;
     output1 << polygon1++;
     output2 << ++polygon2;
     std::string s1 = output1.str(), s2 = output2.str();
-    EXPECT_TRUE(s1 == "(0.00, 0.00)(0.00, 1.00)");
-    EXPECT_TRUE(s2 == "(1.00, 1.00)(1.00, 2.00)");
+    EXPECT_TRUE(s1 == "(0.00, -1.00)(0.00, 1.00)");
+    EXPECT_TRUE(s2 == "(1.00, 0.00)(1.00, 2.00)");
 
     output3 << polygon1--;
     output4 << --polygon2;
     std::string s3 = output3.str(), s4 = output4.str();
-    EXPECT_TRUE(s3 == "(1.00, 1.00)(1.00, 2.00)");
-    EXPECT_TRUE(s4 == "(0.00, 0.00)(0.00, 1.00)");
+    EXPECT_TRUE(s3 == "(1.00, 0.00)(1.00, 2.00)");
+    EXPECT_TRUE(s4 == "(0.00, -1.00)(0.00, 1.00)");
 }
 
 TEST(PolygonWithOperatorsOperators, Brackets) {

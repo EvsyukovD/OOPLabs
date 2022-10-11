@@ -9,9 +9,8 @@
  *
  * <p>Вершины многоугольника хранятся в массиве points, при этом подразумевается,
  * что вершина points[0] соединена с points[1], points[1] соединена с
- * points[2] ... Также подразумевается, что соединенны первая и последние
+ * points[2] ... Также подразумевается, что соединенны первая и последняя
  * вершины.
- * @author <a href=https://github.com/EvsyukovD>EvsyukovD</a>
  * */
 namespace PolygonWithOperators {
     class Polygon {
@@ -192,7 +191,6 @@ namespace PolygonWithOperators {
         /**
          * Получение индекса вершины p многоугольника
          * @param p - вершина в массиве
-         * @throws std::out_of_range - если такой вершине многоугольнике нет
          * */
         int operator[](const Math::Point &p) const;
 
