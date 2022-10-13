@@ -1,8 +1,7 @@
 #include "math.hpp"
 #include <cstring>
 #include <cmath>
-#include <iostream>
-namespace Math{
+namespace Math {
     bool Point::operator==(const Point &p) const {
         const float e = 1E-32;
         return std::fabs(x - p.x) < e && std::fabs(y - p.y) < e;
@@ -20,5 +19,16 @@ namespace Math{
         char *res = new char[len];
         sprintf_s(res, len, "(%.2f, %.2f)", p.x, p.y);
         return res;
+    }
+
+    std::istream &operator>>(std::istream &in, Point &p) {
+        float _x, _y;
+        in >> _x >> _y;
+        if (!in.good()) {
+            throw std::invalid_argument("wrong coordinates");
+        }
+        p.x = _x;
+        p.y = _y;
+        return in;
     }
 }

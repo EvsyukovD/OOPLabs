@@ -6,8 +6,9 @@ namespace DynamicPolygon {
     class Polygon {
     private:
         static const int QUOTA = 10;
-        Math::Point *points;
+        Math::Point *points = nullptr;
         int top = 0;
+        int realSize = 0;
     public:
         /**
          * Пустой конструктор
@@ -31,10 +32,11 @@ namespace DynamicPolygon {
 
         Polygon(const Polygon &p);
 
-        Polygon(const Polygon&& p);
+        Polygon(Polygon&& p);
+        ~Polygon();
 
         /**
-         * Поучение центра тяжести многоугольника
+         * Получение центра тяжести многоугольника
          * @return Point - точка центра тяжести
          * @throws std::logic_error - если у многоугольника нет вершин
          * */
@@ -139,7 +141,7 @@ namespace DynamicPolygon {
          * */
         Polygon &operator=(const Polygon &p);
 
-        Polygon &operator=(const Polygon&& p);
+        Polygon &operator=(Polygon&& p);
 
         Polygon &operator+=(const Polygon &p);
 

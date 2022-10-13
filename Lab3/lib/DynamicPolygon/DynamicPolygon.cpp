@@ -1,6 +1,9 @@
 #include "DynamicPolygon.hpp"
 #include "DialogLib/dialog.hpp"
-namespace DynamicPolygon{
+#include <cmath>
+#include <cstring>
+
+namespace DynamicPolygon {
     Polygon::Polygon() {
 
     }
@@ -26,29 +29,41 @@ namespace DynamicPolygon{
     }
 
     Polygon::Polygon(const Math::Point &p) {
+        points = new Math::Point[QUOTA];
+        realSize += QUOTA;
         points[top] = p;
         top++;
     }
 
     Polygon::Polygon(int num, const Math::Point *p) {
-        if (num > NODES_MAX_NUM) {
-            throw std::length_error("too many points");
-        }
         if (num <= 0) {
             throw std::logic_error("num must be positive");
         }
         if (!check(num, p)) {
             throw std::logic_error("array contains duplicates of points");
         }
+        points = new Math::Point[num / QUOTA + 1];
+        realSize += num / QUOTA + 1;
         for (int i = 0; i < num; i++) {
             points[i] = p[i];
             top++;
         }
     }
 
-    Polygon::Polygon(const Polygon &p) : top(p.top) {
-        for (int i = 0; i < top; i++) {
-            points[i] = p.points[i];
+    Polygon::~Polygon() {
+        delete[] points;
+    }
+
+    Polygon::Polygon(Polygon &&p): top(p.top), realSize(p.realSize), points(p.points) {
+        p.points = nullptr;
+    }
+
+    Polygon::Polygon(const Polygon &p) : top(p.top), realSize(p.realSize) {
+        if (top > 0) {
+            points = new Math::Point[realSize];
+            for (int i = 0; i < top; i++) {
+                points[i] = p.points[i];
+            }
         }
     }
 
@@ -121,11 +136,17 @@ namespace DynamicPolygon{
     }
 
     void Polygon::add(const Math::Point &p) {
-        if (top == NODES_MAX_NUM) {
-            throw std::length_error("array overflow");
-        }
         if (!check(p)) {
             throw std::logic_error("this point already exists");
+        }
+        if (top == realSize) {
+            Math::Point *ptr = points;
+            points = new Math::Point[realSize + QUOTA];
+            realSize += QUOTA;
+            for (int i = 0; i < top; i++) {
+                points[i] = ptr[i];
+            }
+            delete[] ptr;
         }
         points[top].x = p.x;
         points[top].y = p.y;
@@ -138,9 +159,6 @@ namespace DynamicPolygon{
         in >> num;
         if (!in.good() || num <= 0) {
             throw std::invalid_argument("wrong number of points");
-        }
-        if (num > Polygon::NODES_MAX_NUM) {
-            throw std::invalid_argument("too many points");
         }
         p = Polygon();
         for (int i = 0; i < num; i++) {
@@ -222,16 +240,30 @@ namespace DynamicPolygon{
             return *this;
         }
         top = p.top;
+        delete[] points;
+        points = new Math::Point[p.realSize];
+        realSize = p.realSize;
         for (int i = 0; i < top; i++) {
             points[i] = p.points[i];
         }
         return *this;
     }
 
+    Polygon &Polygon::operator=(Polygon &&p) {
+        int tmpTop = top,tmpRealSize = realSize;
+        Math::Point* tmpPtr = points;
+        top = p.top;
+        realSize = p.realSize;
+        points = p.points;
+        p.top = tmpTop;
+        p.realSize = tmpRealSize;
+        p.points = tmpPtr;
+        return *this;
+    }
+
     Polygon Polygon::operator+(const Polygon &p) const {
         Polygon x(*this);
-        int delta = Polygon::NODES_MAX_NUM - top;
-        for (int i = 0; i < delta && i < p.top; i++) {
+        for (int i = 0; i < p.top; i++) {
             try {
                 x.add(p.points[i]);
             } catch (std::exception &e) {
