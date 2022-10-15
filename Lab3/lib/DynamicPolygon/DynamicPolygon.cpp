@@ -42,8 +42,8 @@ namespace DynamicPolygon {
         if (!check(num, p)) {
             throw std::logic_error("array contains duplicates of points");
         }
-        points = new Math::Point[num / QUOTA + 1];
-        realSize += num / QUOTA + 1;
+        points = new Math::Point[num / QUOTA + QUOTA];
+        realSize += num / QUOTA + QUOTA;
         for (int i = 0; i < num; i++) {
             points[i] = p[i];
             top++;
@@ -97,7 +97,7 @@ namespace DynamicPolygon {
         if (k < 0) {
             throw std::invalid_argument("k can't be negative");
         }
-        double alpha = 3.141592654 * (double) k;
+        double alpha = 3.141592654 / 2.0 * (double) k;
         for (int i = 0; i < top; i++) {
             rotate(points[i], alpha);
         }

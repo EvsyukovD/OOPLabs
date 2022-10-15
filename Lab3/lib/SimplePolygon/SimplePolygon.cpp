@@ -71,7 +71,7 @@ namespace SimplePolygon {
         if (k < 0) {
             throw std::invalid_argument("k can't be negative");
         }
-        double alpha = 3.141592654 * (double) k;
+        double alpha = 3.141592654 / 2.0 * (double) k;
         for (int i = 0; i < top; i++) {
             rotate(points[i], alpha);
         }
