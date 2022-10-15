@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 3.22)
+project(DynamicPolygon)
+
+set(DYN_POLYGON_FILES DynamicPolygon.cpp)
+include_directories(MathLib)
+include_directories(DialogLib)
+add_subdirectory(DialogLib)
+add_subdirectory(MathLib)
+add_library(DynamicPolygon STATIC ${DYN_POLYGON_FILES})
+target_link_libraries(DynamicPolygon DialogLib_2 MathLib_2)

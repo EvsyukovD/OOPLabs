@@ -2,7 +2,7 @@
 #include <cmath>
 #include <cstring>
 #include "DialogLib/dialog.hpp"
-
+#define _CRTDBG_MAP_ALLOC
 namespace PolygonWithOperators {
 
     Polygon::Polygon() {
@@ -86,7 +86,7 @@ namespace PolygonWithOperators {
         if (k < 0) {
             throw std::invalid_argument("k can't be negative");
         }
-        double alpha = M_PI_2 * (double) k;
+        double alpha = 3.141592654 * (double) k;
         for (int i = 0; i < top; i++) {
             rotate(points[i], alpha);
         }

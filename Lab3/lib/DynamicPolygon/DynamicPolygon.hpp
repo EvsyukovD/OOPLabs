@@ -1,7 +1,9 @@
 #ifndef DYNAMIC_POLYGON_HPP
 #define DYNAMIC_POLYGON_HPP
+
 #include <iostream>
 #include "MathLib/math.hpp"
+
 namespace DynamicPolygon {
     class Polygon {
     private:
@@ -32,7 +34,8 @@ namespace DynamicPolygon {
 
         Polygon(const Polygon &p);
 
-        Polygon(Polygon&& p);
+        Polygon(Polygon &&p);
+
         ~Polygon();
 
         /**
@@ -141,7 +144,7 @@ namespace DynamicPolygon {
          * */
         Polygon &operator=(const Polygon &p);
 
-        Polygon &operator=(Polygon&& p);
+        Polygon &operator=(Polygon &&p);
 
         Polygon &operator+=(const Polygon &p);
 
@@ -200,7 +203,6 @@ namespace DynamicPolygon {
         * @throws std::invalid_argument - если чтение прошло неудачно или \n
         * если задано некорректное количество точек
         * @throws std::logic_error - если есть повторяющиеся вершины
-        * @throws std::length_error - если массив точек полностью заполнен
         * @return Изменённый входной поток
         * */
         friend std::istream &operator>>(std::istream &in, Polygon &p);
@@ -241,5 +243,122 @@ namespace DynamicPolygon {
          * */
         void rotate(Math::Point &p, double alpha);
     };
+
+    /**
+         * Диалоговая функция выхода
+         * @param p - исходный многоугольник
+         * */
+    void quit(Polygon &p);
+
+    /**
+     * Диалоговая функция инициализации многоугольника с помощью пустого конструктора
+     * @param p - исходный многоугольник
+     * */
+    void initPolygonByEmptyConstructor(Polygon &p);
+
+    /**
+     * Диалоговая функция инициализации многоугольника с помощью точки
+     * @param p - исходный многоугольник
+     * */
+    void initPolygonByPoint(Polygon &p);
+
+    /**
+     * Диалоговая функция инициализации многоугольника с помощью массива точек
+     * @param p - исходный многоугольник
+     * */
+    void initPolygonByArray(Polygon &p);
+
+    /**
+      * Диалоговая функция инициализации многоугольника
+      * @param p - исходный многоугольник
+      * */
+    void init(Polygon &p);
+
+    /**
+     * Диалоговая функция вывода многоугольника в консоль
+     * @param p - исходный многоугольник
+     * */
+    void printPolygon(Polygon &p);
+
+    /**
+     * Диалоговая функция вывода в консоль центра тяжести многоугольника
+     * @param p - исходный многоугольник
+     * */
+    void getGravityCenter(Polygon &p);
+
+    /**
+     * Диалоговая функция получения вершины многоугольника по её номеру
+     * @param p - исходный многоугольник
+     * */
+    void getNodeByIndex(Polygon &p);
+
+    /**
+     * Диалоговая функция поворота многоугольника
+     * @param p - исходный многоугольник
+     * */
+    void rotate(Polygon &p);
+
+    /**
+     * Диалоговая функция перемещения многоугольника
+     * @param p - исходный многоугольник
+     * */
+    void move(Polygon &p);
+
+    /**
+     * Диалоговая функция получения количества вершин многоугольника
+     * @param p - исходный многоугольник
+     * */
+    void getNodesNum(Polygon &p);
+
+    /**
+     * Диалоговая функция замены одной вершины многоугольника на другую
+     * @param p - исходный многоугольник
+     * */
+    void set(Polygon &p);
+
+    /**
+     * Диалоговая функция добавления новой вершины в конец массива
+     * @param p - исходный многоугольник
+     * */
+    void add(Polygon &p);
+
+    /**
+     * Диалоговая функция чтения экземпляра класса из консоли
+     * @param p - исходный многоугольник
+     * */
+    void read(Polygon &p);
+
+    /**
+     * Диалоговая функция, совершающая преобразование ++p
+     * @param p - исходный многоугольник
+     * */
+    void unaryPlus(Polygon &p);
+
+    /**
+     * Диалоговая функция, совершающая преобразование --p
+     * @param p - исходный многоугольник
+     * */
+    void unaryMinus(Polygon &p);
+
+    /**
+     * Диалоговая функция сложения двух многоугольников
+     * @param p - исходный многоугольник
+     * */
+    void binaryPlus(Polygon &p);
+
+
+    /**
+     * Диалоговая функция прибавляющая к данному многоугольнику\n
+     * многоугольник
+     * @param p - исходный многоугольник
+     * */
+    void addToThisPolygon(Polygon &p);
+
+    /**
+     * Диалоговая функция сравнения данного многоугольника с\n
+     * введённым
+     * @param p - исходный многоугольник
+     * */
+    void compare(Polygon &p);
 }
 #endif

@@ -15,6 +15,8 @@ namespace Dialog {
     bool read(T &a) {
         std::cin >> a;
         if (!std::cin.good()) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
             return false;
         }
         return true;

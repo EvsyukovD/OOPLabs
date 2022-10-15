@@ -2,7 +2,7 @@
 #include "DialogLib/dialog.hpp"
 #include <cmath>
 #include <cstring>
-
+#define _CRTDBG_MAP_ALLOC
 namespace DynamicPolygon {
     Polygon::Polygon() {
 
@@ -97,7 +97,7 @@ namespace DynamicPolygon {
         if (k < 0) {
             throw std::invalid_argument("k can't be negative");
         }
-        double alpha = M_PI_2 * (double) k;
+        double alpha = 3.141592654 * (double) k;
         for (int i = 0; i < top; i++) {
             rotate(points[i], alpha);
         }
@@ -339,5 +339,287 @@ namespace DynamicPolygon {
             return true;
         }
         return false;
+    }
+
+    void quit(Polygon &p) {
+
+    }
+
+    void initPolygonByEmptyConstructor(Polygon &p) {
+        p = Polygon();
+    }
+
+    void initPolygonByPoint(Polygon &p) {
+        Math::Point point;
+        std::cout << "Enter new x value of point:" << std::endl;
+        if (!Dialog::read(point.x)) {
+            std::cerr << "Error" << std::endl;
+            return;
+        }
+        std::cout << "Enter new y value of point:" << std::endl;
+        if (!Dialog::read(point.y)) {
+            std::cerr << "Error" << std::endl;
+            return;
+        }
+        p = Polygon(point);
+    }
+
+    void initPolygonByArray(Polygon &p) {
+        int num = -1;
+        std::cout << "Enter number of points:" << std::endl;
+        if (!Dialog::read(num) || num <= 0) {
+            std::cerr << "Error: wrong number" << std::endl;
+            return;
+        }
+        Math::Point *points = new Math::Point[num];
+        for (int i = 0; i < num; i++) {
+            std::cout << "Enter x value of point " << i << " :" << std::endl;
+            if (!Dialog::read(points[i].x)) {
+                delete[] points;
+                std::cerr << "Error" << std::endl;
+                return;
+            }
+            std::cout << "Enter y value of point " << i << " :" << std::endl;
+            if (!Dialog::read(points[i].y)) {
+                delete[] points;
+                std::cerr << "Error" << std::endl;
+                return;
+            }
+        }
+        try {
+            p = Polygon(num, points);
+        } catch (std::logic_error &e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+        }
+        delete[] points;
+    }
+
+    void init(Polygon &p) {
+        void (*fptrs[])(Polygon &) = {initPolygonByEmptyConstructor,
+                                      initPolygonByPoint,
+                                      initPolygonByArray};
+        const char *menu[] = {"0.Init polygon by empty constructor",
+                              "1.Init polygon by point",
+                              "2.Init polygon by array"};
+        int size = sizeof(menu) / sizeof(char *), rc;
+        if ((rc = Dialog::dialog(menu, size)) != -1 && rc != 0) {
+            fptrs[rc](p);
+        }
+    }
+
+    void printPolygon(Polygon &p) {
+        if (p.getNodesNum() == 0) {
+            std::cout << "Polygon doesn't have nodes" << std::endl;
+        } else {
+            std::cout << "Your polygon:" << std::endl;
+            std::cout << p << std::endl;
+        }
+    }
+
+    void getGravityCenter(Polygon &p) {
+
+        try {
+            Math::Point point = p.getGravityCenter();
+            char *s = point.toString();
+            std::cout << "Gravity center: " << s << std::endl;
+            delete[] s;
+
+        } catch (std::logic_error &e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+        }
+    }
+
+    void getNodeByIndex(Polygon &p) {
+        if (p.getNodesNum() == 0) {
+            std::cout << "Polygon doesn't have nodes" << std::endl;
+            return;
+        }
+        int i;
+        std::cout << "Enter index of point:" << std::endl;
+        if (!Dialog::read(i)) {
+            std::cerr << "Error" << std::endl;
+            return;
+        }
+        try {
+            Math::Point point = p[i];
+            char *s = point.toString();
+            std::cout << "Your node: " << s << std::endl;
+            delete[] s;
+        } catch (std::out_of_range &e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+        }
+    }
+
+    void rotate(Polygon &p) {
+        if (p.getNodesNum() == 0) {
+            std::cout << "Polygon doesn't have nodes" << std::endl;
+            return;
+        }
+        int k;
+        std::cout << "Enter number of rotations on 90 degrees:" << std::endl;
+        if (!Dialog::read(k)) {
+            std::cerr << "Error" << std::endl;
+            return;
+        }
+        try {
+            p(k);
+            std::cout << "Rotated polygon:" << std::endl;
+            std::cout << p << std::endl;
+        } catch (std::invalid_argument &e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+        }
+    }
+
+    void move(Polygon &p) {
+        if (p.getNodesNum() == 0) {
+            std::cout << "Polygon doesn't have nodes" << std::endl;
+            return;
+        }
+        Math::Point point;
+        std::cout << "Enter x value of ending point:" << std::endl;
+        if (!Dialog::read(point.x)) {
+            std::cerr << "Error" << std::endl;
+            return;
+        }
+        std::cout << "Enter y value of ending point:" << std::endl;
+        if (!Dialog::read(point.y)) {
+            std::cerr << "Error" << std::endl;
+            return;
+        }
+        p.move(point);
+        std::cout << "Moved polygon:" << std::endl;
+        std::cout << p << std::endl;
+    }
+
+    void getNodesNum(Polygon &p) {
+        std::cout << "Nodes number: " << p.getNodesNum() << std::endl;
+    }
+
+    void set(Polygon &p) {
+        if (p.getNodesNum() == 0) {
+            std::cout << "Polygon doesn't have nodes" << std::endl;
+            return;
+        }
+        int i;
+        std::cout << "Enter index of old node:" << std::endl;
+        if (!Dialog::read(i)) {
+            std::cerr << "Error" << std::endl;
+            return;
+        }
+        Math::Point point;
+        std::cout << "Enter x value of new point:" << std::endl;
+        if (!Dialog::read(point.x)) {
+            std::cerr << "Error" << std::endl;
+            return;
+        }
+        std::cout << "Enter y value of new point:" << std::endl;
+        if (!Dialog::read(point.y)) {
+            std::cerr << "Error" << std::endl;
+            return;
+        }
+        try {
+            p.set(point, i);
+            std::cout << "New polygon:" << std::endl;
+            std::cout << p << std::endl;
+        } catch (std::exception &e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+        }
+    }
+
+    void read(Polygon &p) {
+        std::cout << "Enter the number of elements and coordinates of the points, separated by a space" << std::endl;
+        Polygon polygon;
+        try {
+            std::cin >> polygon;
+            std::cout << "Your polygon:" << std::endl;
+            std::cout << polygon << std::endl;
+        } catch (std::exception &e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+        }
+    }
+
+    void add(Polygon &p) {
+        Math::Point point;
+        std::cout << "Enter x value of point:" << std::endl;
+        if (!Dialog::read(point.x)) {
+            std::cerr << "Error" << std::endl;
+            return;
+        }
+        std::cout << "Enter y value of point:" << std::endl;
+        if (!Dialog::read(point.y)) {
+            std::cerr << "Error" << std::endl;
+            return;
+        }
+        try {
+            p.add(point);
+        } catch (std::exception &e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+        }
+    }
+
+    void unaryPlus(Polygon &p) {
+        ++p;
+    }
+
+
+    void unaryMinus(Polygon &p) {
+        --p;
+    }
+
+    void binaryPlus(Polygon &p) {
+        std::cout << "Enter the number of elements and coordinates of the points, separated by a space" << std::endl;
+        Polygon polygon1, polygon2, polygon3;
+        try {
+            std::cout << "First polygon:" << std::endl;
+            std::cin >> polygon1;
+            std::cout << "Your polygon1:" << std::endl;
+            std::cout << polygon1 << std::endl;
+
+            std::cout << "Second polygon:" << std::endl;
+            std::cin >> polygon2;
+            std::cout << "Your polygon2:" << std::endl;
+            std::cout << polygon2 << std::endl;
+            polygon3 = polygon1 + polygon2;
+            std::cout << "Result:" << std::endl;
+            std::cout << polygon3 << std::endl;
+        } catch (std::exception &e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+        }
+    }
+
+    void addToThisPolygon(Polygon &p) {
+        std::cout << "Enter the number of elements and coordinates of the points, separated by a space" << std::endl;
+        Polygon polygon;
+        try {
+            std::cin >> polygon;
+            std::cout << "Your polygon:" << std::endl;
+            std::cout << polygon << std::endl;
+            p += polygon;
+            std::cout << "Result:" << std::endl;
+            std::cout << p << std::endl;
+        } catch (std::exception &e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+        }
+    }
+
+    void compare(Polygon &p) {
+        std::cout << "Enter the number of elements and coordinates of the points, separated by a space" << std::endl;
+        Polygon polygon;
+        try {
+            std::cin >> polygon;
+            std::cout << "Your polygon:" << std::endl;
+            std::cout << polygon << std::endl;
+            if (p > polygon) {
+                std::cout << "This polygon 'bigger' than your:" << p << " > " << polygon << std::endl;
+            }
+            if (p < polygon) {
+                std::cout << "This polygon 'less' than your:" << p << " < " << polygon << std::endl;
+            }
+            if (p == polygon) {
+                std::cout << "This polygon equals to your:" << p << " = " << polygon << std::endl;
+            }
+        } catch (std::exception &e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+        }
     }
 }
