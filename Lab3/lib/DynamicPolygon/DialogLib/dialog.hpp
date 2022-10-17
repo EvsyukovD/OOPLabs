@@ -2,7 +2,7 @@
 #define DIALOG_HPP
 
 #include <iostream>
-
+#include <limits>
 namespace Dialog {
     /**
       Функция диалога
