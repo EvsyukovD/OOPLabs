@@ -1,27 +1,30 @@
 #include <iostream>
-#include "lib/PolygonWithOperators/PolygonWithOperators.hpp"
-#include "lib/PolygonWithOperators/DialogLib/dialog.hpp"
+#include "lib/DynamicPolygon/DynamicPolygon.hpp"
+#include "lib/DynamicPolygon/DialogLib/dialog.hpp"
+
 #define _CRTDBG_MAP_ALLOC
+
 #include <crtdbg.h>
+
 int main() {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    void (*fptrs[])(PolygonWithOperators::Polygon&) = {PolygonWithOperators::quit,
-                                                       PolygonWithOperators::init,
-                                                       PolygonWithOperators::printPolygon,
-                                                       PolygonWithOperators::getGravityCenter,
-                                                       PolygonWithOperators::getNodeByIndex,
-                                                       PolygonWithOperators::rotate,
-                                                       PolygonWithOperators::move,
-                                                       PolygonWithOperators::getNodesNum,
-                                                       PolygonWithOperators::set,
-                                                       PolygonWithOperators::add,
-                                                       PolygonWithOperators::read,
-                                                       PolygonWithOperators::unaryPlus,
-                                                       PolygonWithOperators::unaryMinus,
-                                                       PolygonWithOperators::binaryPlus,
-                                                       PolygonWithOperators::addToThisPolygon,
-                                                       PolygonWithOperators::compare};
-    const char* menu[] = {"0.Quit",
+    void (*fptrs[])(DynamicPolygon::Polygon &) = {DynamicPolygon::quit,
+                                                  DynamicPolygon::init,
+                                                  DynamicPolygon::printPolygon,
+                                                  DynamicPolygon::getGravityCenter,
+                                                  DynamicPolygon::getNodeByIndex,
+                                                  DynamicPolygon::rotate,
+                                                  DynamicPolygon::move,
+                                                  DynamicPolygon::getNodesNum,
+                                                  DynamicPolygon::set,
+                                                  DynamicPolygon::add,
+                                                  DynamicPolygon::read,
+                                                  DynamicPolygon::unaryPlus,
+                                                  DynamicPolygon::unaryMinus,
+                                                  DynamicPolygon::binaryPlus,
+                                                  DynamicPolygon::addToThisPolygon,
+                                                  DynamicPolygon::compare};
+    const char *menu[] = {"0.Quit",
                           "1.Init polygon",
                           "2.Print polygon",
                           "3.Get gravity center",
@@ -38,9 +41,9 @@ int main() {
                           "14.Operator mod equation(+=)",
                           "15.Compare this polygon with your polygon"};
 
-    int size = sizeof(menu) / sizeof(char*);
+    int size = sizeof(menu) / sizeof(char *);
     int rc;
-    PolygonWithOperators::Polygon p;
+    DynamicPolygon::Polygon p;
     do {
         while ((rc = Dialog::dialog(menu, size)) != -1 && rc != 0) {
             fptrs[rc](p);
